@@ -18,14 +18,22 @@
 #elif (DDR_SIZE_2GB_1PCS == 1)
 #include "param_mc_C-011_D4-01-1.c"
 #elif (DDR_SIZE_1GB_1PCS == 1)
-#include "param_mc_C-011_D4-01-2.c"
+	#if (GNK_RZG2L == 1)
+		#include "param_mc_C-011_D4-01-2-gnk.c"
+	#else
+		#include "param_mc_C-011_D4-01-2.c"
+	#endif
 #else
 #error "Unknown size."
 #endif
 #if (SWIZZLE_T1C == 1)
 #include "param_swizzle_T1c.c"
 #elif (SWIZZLE_T1BC == 1)
-#include "param_swizzle_T1bc.c"
+	#if (GNK_RZG2L == 1)
+		#include "param_swizzle_T1bc-gnk.c"
+	#else
+		#include "param_swizzle_T1bc.c"
+	#endif
 #elif (SWIZZLE_T2C == 1)
 #include "param_swizzle_T2c.c"
 #elif (SWIZZLE_T3BC == 1)
@@ -589,7 +597,7 @@ static void exec_trainingVREF(uint32_t sl_lanes, uint32_t byte_lanes)
 			}
 		} else {
 			if ((vref_mid_level_code + vref_training_value - sweep_range) > 126) {
-				break; 
+				break;
 			} else {
 				current_vref = vref_mid_level_code + vref_training_value - sweep_range;
 			}

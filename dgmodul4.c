@@ -53,6 +53,22 @@ static uint32_t CheckQspiFlashId(void)
 	gDeviceId		= deviceId;
 	switch(manuId)
 	{
+		case ISSI_MANUFACTURER_ID:
+			PutStr(" Issi : ", 0);
+			switch (deviceId)
+			{
+				case DEVICE_ID_IS25WP512M:
+						PutStr("IS25WP512M", 1);
+						gQspi_sa_size    = SA_64KB;
+						gQspi_end_addess = TOTAL_SIZE_64MB - 0x8000 - 1;
+				break;
+
+				default:
+					ret = 1;
+				break;
+			}
+		break;
+
 		case CYPRESS_MANUFACTURER_ID:
 			PutStr(" Cypress : ", 0);
 			switch(deviceId)
