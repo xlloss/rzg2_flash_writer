@@ -20,6 +20,8 @@
 #elif (DDR_SIZE_1GB_1PCS == 1)
 	#if (GNK_RZG2L == 1)
 		#include "param_mc_C-011_D4-01-2-gnk.c"
+	#elif (GNK_RZV2L == 1)
+		#include "param_mc_C-011_D4-01-1-gnk.c"
 	#else
 		#include "param_mc_C-011_D4-01-2.c"
 	#endif
@@ -31,8 +33,16 @@
 #elif (SWIZZLE_T1BC == 1)
 	#if (GNK_RZG2L == 1)
 		#include "param_swizzle_T1bc-gnk.c"
+	#elif (GNK_RZV2L == 1)
+		#include "param_swizzle_T1vbc-gnk.c"
 	#else
 		#include "param_swizzle_T1bc.c"
+	#endif
+#elif (SWIZZLE_T1VBC == 1)
+	#if (GNK_RZV2L == 1)
+		#include "param_swizzle_T1vbc-gnk.c"
+	#else
+		#error "Unknown swizzle"
 	#endif
 #elif (SWIZZLE_T2C == 1)
 #include "param_swizzle_T2c.c"
