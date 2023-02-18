@@ -8,7 +8,27 @@ ifeq ("$(BOARD)", "")
 BOARD = RZG2L_SMARC
 endif
 
-ifeq ("$(BOARD)", "RZG2L_SMARC")
+ifeq ("$(BOARD)", "GNK_RZG2L")
+#--------------------------------------
+# RZ/G2L GNK_RZG2L Smarc board
+#--------------------------------------
+FILENAME_ADD = _GNK_RZG2L
+DEVICE   = RZG2L
+DDR_TYPE = DDR4
+DDR_SIZE = 1GB_1PCS
+SWIZZLE  = T1BC
+
+else ifeq ("$(BOARD)", "GNK_RZV2L")
+#--------------------------------------
+# RZ/V2L GNK_RZV2L Smarc board
+#--------------------------------------
+FILENAME_ADD = _GNK_RZV2L
+DEVICE   = RZV2L
+DDR_TYPE = DDR4
+DDR_SIZE = 1GB_1PCS
+SWIZZLE  = T1VBC
+
+else ifeq ("$(BOARD)", "RZG2L_SMARC")
 #--------------------------------------
 # RZ/G2L Smarc board
 #--------------------------------------
@@ -180,6 +200,14 @@ SWIZZLE  = T3BCUD2
 DEVICE_TYPE = 1
 endif
 
+ifeq ("$(BOARD)", "GNK_RZG2L")
+	CFLAGS += -DGNK_RZG2L=1
+endif
+
+ifeq ("$(BOARD)", "GNK_RZV2L")
+	CFLAGS += -DGNK_RZV2L=1
+endif
+
 # Select SERIAL_FLASH("ENABLE"or"DISABLE" )
 ifeq ("$(SERIAL_FLASH)", "")
 SERIAL_FLASH = ENABLE
@@ -209,10 +237,10 @@ DDR_TYPE = INTERNAL
 endif
 
 #CPU
-CPU     = 
+CPU     =
 AArch   = 64
-THUMB   = 
-AS_NEON = 
+THUMB   =
+AS_NEON =
 CC_NEON = -mgeneral-regs-only
 ALIGN   = -mstrict-align
 AArch32_64  = AArch64
@@ -273,6 +301,10 @@ endif
 
 ifeq ("$(SWIZZLE)", "T1BC")
 	CFLAGS += -DSWIZZLE_T1BC=1
+endif
+
+ifeq ("$(SWIZZLE)", "T1VBC")
+	CFLAGS += -DSWIZZLE_T1VBC=1
 endif
 
 ifeq ("$(SWIZZLE)", "T2C")
