@@ -16,7 +16,16 @@ void InitRPC_QspiFlashQuadExtMode(void)
 {
 	*((volatile uint32_t*)RPC_PHYCNT)     = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)     = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x01FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)      = RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 	*((volatile uint32_t*)RPC_DRCR)       = 0x001F0100;
 		//bit20-16 RBURST[4:0] = 11111 : 32 continuous data unit
 		//bit8     RBE         =     1 : Burst read
@@ -45,7 +54,15 @@ void InitRPC_QspiFlash4FastReadExtMode(void)
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x01FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)      = RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
 	*((volatile uint32_t*)RPC_DRCR)       = 0x001F0100;
 		//bit20-16 RBURST[4:0] = 11111 : 32 continuous data unit
 		//bit8     RBE         =     1 : Burst read
@@ -89,7 +106,17 @@ void ReadConfigRegQspiFlash(uint32_t *cnfigReg)
 
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)     = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00350000;
 		//bit23-16 CMD[7:0] = 0x35 : Read Configuration Register (CFG)
 
@@ -122,7 +149,17 @@ void WriteRegisterQspiFlash(uint32_t statusReg, uint32_t configReg)
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
 		//bit31  CAL         =  1 : PHY calibration
 		//bit1-0 PHYMEM[1:0] = 00 : QSPI-SDR
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00010000;
@@ -165,7 +202,17 @@ void WriteRegisterQspiFlash_Byte2(uint32_t statusReg, uint32_t configReg)
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
 		//bit31  CAL         =  1 : PHY calibration
 		//bit1-0 PHYMEM[1:0] = 00 : QSPI-SDR
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00010000;
@@ -219,7 +266,17 @@ void SectorErase4QspiFlash(uint32_t sector_addr)
 	char str[64];
 
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00DC0000;
@@ -248,7 +305,17 @@ void SectorErase4QspiFlash(uint32_t sector_addr)
 void ParameterSectorErase4QspiFlash(uint32_t sector_addr)
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD|
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00210000;
@@ -290,7 +357,17 @@ void WriteData4ppWithBufferQspiFlash(uint32_t addr, uint32_t source_addr)
 		//bit31  CAL         =  1 : PHY calibration
 		//bit2   WBUF        =  1 : Write Buffer Enable
 		//bit1-0 PHYMEM[1:0] = 00 : QSPI-SDR
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00120000;
@@ -338,7 +415,17 @@ void WriteDataPpWithBufferQspiFlash(uint32_t addr, uint32_t source_addr)
 		//bit31  CAL         =  1 : PHY calibration
 		//bit2   WBUF        =  1 : Write Buffer Enable
 		//bit1-0 PHYMEM[1:0] = 00 : QSPI-SDR
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00020000;
@@ -372,11 +459,20 @@ void WriteDataPpWithBufferQspiFlash(uint32_t addr, uint32_t source_addr)
 void WriteData4ppQspiFlash(uint32_t addr, uint32_t writeData)
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00120000;
-		//bit23-16 CMD[7:0] = 0x12 : Page Program 4-byte address 
+		//bit23-16 CMD[7:0] = 0x12 : Page Program 4-byte address
 	*((volatile uint32_t*)RPC_SMADR)      = addr;
 	*((volatile uint32_t*)RPC_SMDRENR)    = 0x00000000;
 		//bit8 ADDRE  = 0 : Address SDR transfer
@@ -408,11 +504,21 @@ void WriteData4ppQspiFlash_CsCont(uint32_t addr, uint32_t *writeData,uint32_t cn
 	uint32_t i,loopf,dataL;
 
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD|
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00120000;
-		//bit23-16 CMD[7:0] = 0x12 : Page Program 4-byte address 
+		//bit23-16 CMD[7:0] = 0x12 : Page Program 4-byte address
 	*((volatile uint32_t*)RPC_SMADR)      = addr;
 	*((volatile uint32_t*)RPC_SMDRENR)    = 0x00000000;
 		//bit8 ADDRE  = 0 : Address SDR transfer
@@ -482,7 +588,16 @@ void WriteData4ppQspiFlash_CsCont(uint32_t addr, uint32_t *writeData,uint32_t cn
 void WriteData4qppQspiFlash(uint32_t addr, uint32_t writeData)
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00340000;
@@ -517,7 +632,17 @@ uint32_t SingleFastReadQspiFlashData4Byte(uint32_t addr, uint32_t *readData)	//f
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x000C0000;
@@ -552,7 +677,17 @@ uint32_t SingleFastReadQspiFlashData1Byte(uint32_t addr, uint32_t *readData)	//f
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x000C0000;
@@ -590,7 +725,17 @@ uint32_t ReadAnyRegisterQspiFlash(uint32_t addr, unsigned char *readData)		// Ad
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00650000;
@@ -626,7 +771,17 @@ uint32_t ReadAnyRegisterQspiFlash(uint32_t addr, unsigned char *readData)		// Ad
 void WriteAnyRegisterQspiFlash(uint32_t addr, unsigned char writeData)			// Add24bit,Data8bit
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00710000;
@@ -661,7 +816,15 @@ void InitRPC_QspiFlashFastReadExtMode(void)
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x01FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)      = RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
 	*((volatile uint32_t*)RPC_DRCR)       = 0x001F0100;
 		//bit20-16 RBURST[4:0] = 11111 : 32 continuous data unit
 		//bit8     RBE         =     1 : Burst read
@@ -770,9 +933,19 @@ uint32_t ReadQspiFlashID(uint32_t *readData)	//for QSPIx1ch
 {
 	char str[64];
 
-	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030060;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030060;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	//*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030060;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x009F0000;
@@ -801,9 +974,18 @@ uint32_t ReadQspiFlashID(uint32_t *readData)	//for QSPIx1ch
 
 uint32_t ReadStatusQspiFlash(uint32_t *readData)	//for QSPIx1ch
 {
-	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00050000;
@@ -831,12 +1013,48 @@ uint32_t ReadStatusQspiFlash(uint32_t *readData)	//for QSPIx1ch
 	return(readData[0]);
 }
 
+void WriteStatusQspiFlash(uint32_t statusData)
+{
+	uint32_t writeData;
+
+	writeData  = statusData;
+
+	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
+	*((volatile uint32_t*)RPC_SMCMR)      = 0x00010000;
+	*((volatile uint32_t*)RPC_SMDRENR)    = 0x00000000;
+	*((volatile uint32_t*)RPC_SMENR)      = 0x00004008;
+	*((volatile uint32_t*)RPC_SMWDR0)     = writeData;
+	*((volatile uint32_t*)RPC_SMCR)       = 0x00000003;
+
+	WaitRpcTxEnd();
+}
 
 
 void WriteCommandQspiFlash(uint32_t command)	//for QSPIx1ch
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = command;
@@ -877,7 +1095,17 @@ void WriteDataWithBufferQspiFlash(uint32_t addr, uint32_t source_addr)	//for QSP
 		//bit31  CAL         =  1 : PHY calibration
 		//bit2   WBUF        =  1 : Write Buffer Enable
 		//bit1-0 PHYMEM[1:0] = 00 : QSPI-SDR
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00020000;
@@ -910,7 +1138,17 @@ void WriteDataWithBufferQspiFlash(uint32_t addr, uint32_t source_addr)	//for QSP
 void ParameterSectorErase3QspiFlash(uint32_t sector_addr)
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_MD |
+						RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00200000;
@@ -939,7 +1177,16 @@ void ParameterSectorErase3QspiFlash(uint32_t sector_addr)
 void SectorEraseQspiFlash(uint32_t sector_addr)	//for QSPIx1ch
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x81FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)    = RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  1 : Manual mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_SMCMR)      = 0x00D80000;
@@ -968,7 +1215,16 @@ void InitRPC_ExtMode_QuadIORead(void)	//for QSPIx1ch
 {
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x00030260;
 	*((volatile uint32_t*)RPC_PHYCNT)    = 0x80030260;
-	*((volatile uint32_t*)RPC_CMNCR)      = 0x01FFF300;
+	*((volatile uint32_t*)RPC_CMNCR)      = RPCIF_CMNCR_SFDE |
+						RPCIF_CMNCR_MOIIO3(1) |
+						RPCIF_CMNCR_MOIIO2(1) |
+						RPCIF_CMNCR_MOIIO1(1) |
+						RPCIF_CMNCR_MOIIO0(1) |
+						RPCIF_CMNCR_IO3FV(2) |
+						RPCIF_CMNCR_IO2FV(2) |
+						RPCIF_CMNCR_IO0FV(2) |
+						RPCIF_CMNCR_BSZ(0);
+
 		//bit31  MD       =  0 : External address space read mode
 		//bit1-0 BSZ[1:0] = 00 : QSPI Flash x 1
 	*((volatile uint32_t*)RPC_DRCR)       = 0x001F0100;
@@ -1027,5 +1283,33 @@ void EnableQuadModeQspiFlashS25fs128s(void)
 				break;
 			}
 		}
+	}
+}
+/* Qspi:Enable QUAD mode */
+void EnableQuadModeQspiFlashIS25WP512M(void)
+{
+	uint32_t r_statusData;
+	uint32_t w_statusData;
+
+	while (1) {
+		WriteCommandQspiFlash(FLASH_WREN << 16);
+		ReadStatusQspiFlash(&r_statusData);
+		if (r_statusData & BUSY_ENABLE || r_statusData == STATUS_ERR1) {
+			udelay(10);
+			continue;
+		}
+		udelay(10);
+		w_statusData = ((r_statusData | QUAD_ENABLE)) << 24;
+
+		WriteStatusQspiFlash(w_statusData);
+		ReadStatusQspiFlash(&r_statusData);
+
+		if (r_statusData & BUSY_ENABLE || r_statusData == STATUS_ERR1) {
+			udelay(10);
+			continue;
+		}
+
+		if (r_statusData & QUAD_ENABLE)
+			break;
 	}
 }

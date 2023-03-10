@@ -31,8 +31,25 @@
 #define RPC_PHYADJ1		(RZG2L_SPIMULT_BASE + 0x0070U)
 #define RPC_PHYADJ2		(RZG2L_SPIMULT_BASE + 0x0074U)
 #define	RPC_PHYCNT		(RZG2L_SPIMULT_BASE + 0x007CU)	// R/W
-#define	RPC_OFFSET1		(RZG2L_SPIMULT_BASE + 0x0080U)	// 
+#define	RPC_OFFSET1		(RZG2L_SPIMULT_BASE + 0x0080U)	//
 #define	RPC_PHYINT		(RZG2L_SPIMULT_BASE + 0x0088U)	// R/W
 #define	RPC_WRBUF		(RZG2L_SPIMULT_WBUF_BASE)	// W	RPC Write buffer (Access size=4/8/16/32/64Byte)
+
+#define RPCIF_CMNCR_MD		(1 << 31)
+#define RPCIF_CMNCR_SFDE	(1 << 24) /* undocumented but must be set */
+#define RPCIF_CMNCR_MOIIO3(val)	(((val) & 0x3) << 22)
+#define RPCIF_CMNCR_MOIIO2(val)	(((val) & 0x3) << 20)
+#define RPCIF_CMNCR_MOIIO1(val)	(((val) & 0x3) << 18)
+#define RPCIF_CMNCR_MOIIO0(val)	(((val) & 0x3) << 16)
+#define RPCIF_CMNCR_MOIIO_HIZ	(RPCIF_CMNCR_MOIIO0(3) | \
+				 RPCIF_CMNCR_MOIIO1(3) | \
+				 RPCIF_CMNCR_MOIIO2(3) | RPCIF_CMNCR_MOIIO3(3))
+#define RPCIF_CMNCR_IO3FV(val)	(((val) & 0x3) << 14) /* documented for RZ/G2L */
+#define RPCIF_CMNCR_IO2FV(val)	(((val) & 0x3) << 12) /* documented for RZ/G2L */
+#define RPCIF_CMNCR_IO0FV(val)	(((val) & 0x3) << 8)
+#define RPCIF_CMNCR_IOFV_HIZ	(RPCIF_CMNCR_IO0FV(3) | RPCIF_CMNCR_IO2FV(3) | \
+				 RPCIF_CMNCR_IO3FV(3))
+#define RPCIF_CMNCR_BSZ(val)	(((val) & 0x3) << 0)
+
 
 #endif	/* __RPC_REGS_H__ */

@@ -9,6 +9,12 @@
 #define RPC_CLK_80M			0x02
 #define RPC_CLK_160M			0x03
 
+#define QUAD_ENABLE (1 << 6)
+#define WEL_ENABLE (1 << 1)
+#define BUSY_ENABLE (1 << 0)
+#define FLASH_WREN 0x6
+#define STATUS_ERR0 0xFF
+#define STATUS_ERR1 0x00
 
 void InitRPC_QspiFlashQuadExtMode(void);
 void InitRPC_QspiFlash4FastReadExtMode(void);
@@ -47,3 +53,5 @@ void WriteDataWithBufferQspiFlash(uint32_t addr, uint32_t source_addr);	//for QS
 void SectorEraseQspiFlash(uint32_t sector_addr);	//for QSPIx1ch
 void InitRPC_ExtMode_QuadIORead(void);			//for QSPIx1ch
 void EnableQuadModeQspiFlashS25fs128s(void);
+void WriteStatusQspiFlash(uint32_t statusData);
+void EnableQuadModeQspiFlashIS25WP512M(void);
