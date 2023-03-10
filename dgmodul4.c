@@ -13,6 +13,8 @@
 #include "devdrv.h"
 #include "dgmodul1.h"
 #include "bit.h"
+#include "cpudrv.h"
+#include "dgmodul4.h"
 #include <string.h>
 
 uint32_t	gSpiFlashSvArea;
@@ -41,9 +43,11 @@ static uint32_t CheckQspiFlashId(void)
 {
 	char		str[64];
 	uint32_t	readDevId, ret = 0;
-	uint8_t		manuId;
+	uint8_t		manuId, retry_cnt;
 	uint16_t	deviceId;
 
+	retry_cnt = 10;
+retry:
 	ReadQspiFlashID(&readDevId);
 
 	manuId   = readDevId & 0x000000ff;
@@ -51,6 +55,17 @@ static uint32_t CheckQspiFlashId(void)
 
 	gManufacturerId	= manuId;
 	gDeviceId		= deviceId;
+
+	if (manuId == STATUS_ERR0 || manuId == STATUS_ERR1) {
+		udelay(5000);
+		if (retry_cnt > 10) {
+			ret = 1;
+			goto exit;
+		}
+
+		goto retry;
+	}
+
 	switch(manuId)
 	{
 		case ISSI_MANUFACTURER_ID:
@@ -265,6 +280,7 @@ static uint32_t CheckQspiFlashId(void)
 			ret = 1;
 		break;
 	}
+exit:
 	if (ret)
 	{
 		Data2HexAscii(readDevId, str, 4);
@@ -668,6 +684,7 @@ void dgClearSpiflash0(void)
 {
 	uint32_t	readManuId,readDevId;
 	int32_t		Rtn;
+	uint8_t		manuId;
 
 	Rtn = NORMAL_END;
 
@@ -682,10 +699,16 @@ void dgClearSpiflash0(void)
 	DelStr(14);
 	InitRPC_Mode();
 
+	PutStr("CheckQspiFlashId", 1);
 	if (CheckQspiFlashId())
 	{
 		return;		//Error abortt
 	}
+
+#if (GNK_RZG2L == 1) || (GNK_RZV2L == 1)
+	EnableQuadModeQspiFlashIS25WP512M();
+#endif
+
 	PutStr(" ERASE QSPI-FLASH (60sec[typ])....",0);
 	Rtn = BulkEraseQspiFlash();
 	if (Rtn == NORMAL_END)
